@@ -1,0 +1,669 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>
+:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0}
+img{max-width:100%}
+[hidden]{display:none!important}
+</style>
+<title>구라시키·다카마쓰·오사카 1.22–1.25</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Gowun+Dodum&display=swap" rel="stylesheet">
+<style>
+/* Layout: 폰 한 손 스크롤용 세로 카드 흐름 · 상단 고정 날짜 칩 · 날짜마다 고유 색 스티커 */
+:root{
+  --bg:#F3F7FA; --paper:#FFFFFF; --ink:#283545; --sub:#66748A; --line:#DDE6EE;
+  --sea:#3A87A8; --sea-soft:#DCEEF5;
+  --persimmon:#E0703F; --persimmon-soft:#FDE6DB;
+  --sakura:#D96C86; --sakura-soft:#FBE4EA;
+  --mustard:#C9961F; --mustard-soft:#FBF0D2;
+  --leaf:#4E9166; --leaf-soft:#E0F1E5;
+  --shadow:0 2px 0 rgba(40,53,69,.06),0 6px 18px rgba(40,53,69,.06);
+  --display:"Jua","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --body:"Gowun Dodum","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#16202A; --paper:#1F2A36; --ink:#EAF0F5; --sub:#A2B0BF; --line:#2F3D4C;
+  --sea:#7CC3DF; --sea-soft:#1D3947; --persimmon:#F49A75; --persimmon-soft:#45291E;
+  --sakura:#F2A5B6; --sakura-soft:#43252E; --mustard:#EFC765; --mustard-soft:#3D3319;
+  --leaf:#8CCB9E; --leaf-soft:#1E3628; --shadow:none; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#16202A; --paper:#1F2A36; --ink:#EAF0F5; --sub:#A2B0BF; --line:#2F3D4C;
+  --sea:#7CC3DF; --sea-soft:#1D3947; --persimmon:#F49A75; --persimmon-soft:#45291E;
+  --sakura:#F2A5B6; --sakura-soft:#43252E; --mustard:#EFC765; --mustard-soft:#3D3319;
+  --leaf:#8CCB9E; --leaf-soft:#1E3628; --shadow:none; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15.5px;line-height:1.65;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 40px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--bg)}
+.wrap{max-width:620px;margin:0 auto}
+h1,h2,h3,.disp{font-family:var(--display);font-weight:400;text-wrap:balance;letter-spacing:.01em}
+a{color:var(--sea)}
+a:focus-visible,button:focus-visible,input:focus-visible,label:focus-within{outline:3px solid var(--mustard);outline-offset:2px}
+.num{font-variant-numeric:tabular-nums}
+
+/* 표지 */
+.hero{padding:22px 0 6px;display:grid;gap:10px}
+.hero .eyebrow{font-size:13px;color:var(--sub);letter-spacing:.06em}
+.hero h1{font-size:30px;line-height:1.2;margin:0}
+.hero h1 .dot{color:var(--persimmon)}
+.hero p{margin:0;color:var(--sub)}
+.stamp-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.stamp{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:5px 12px 5px 6px;font-size:13.5px;background:var(--paper);box-shadow:var(--shadow);border:1px solid var(--line)}
+.stamp svg{width:22px;height:22px;flex:0 0 auto}
+
+/* 날짜 칩 */
+nav.chips{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);margin:10px 0 0;padding:8px 0}
+.chiprow{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.chiprow::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;text-decoration:none;color:var(--ink);background:var(--paper);border:1.5px solid var(--line);border-radius:999px;padding:6px 13px;font-size:14px;white-space:nowrap}
+.chip b{font-family:var(--display);font-weight:400;margin-right:4px}
+.chip.d1{border-color:var(--sakura)} .chip.d2{border-color:var(--sea)} .chip.d3{border-color:var(--persimmon)} .chip.d4{border-color:var(--leaf)}
+
+section{scroll-margin-top:calc(env(safe-area-inset-top,0px) + 60px);margin-top:26px}
+.sechead{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.sechead svg{width:42px;height:42px;flex:0 0 auto}
+.sechead h2{margin:0;font-size:23px;line-height:1.25}
+.sechead .sub{font-size:13px;color:var(--sub);display:block}
+.card{background:var(--paper);border-radius:20px;padding:16px;box-shadow:var(--shadow);border:1px solid var(--line)}
+.card + .card{margin-top:12px}
+.card h3{margin:0 0 8px;font-size:18px}
+.muted{color:var(--sub);font-size:13.5px}
+.tip{border-radius:16px;padding:12px 14px;font-size:14.5px;margin-top:12px}
+.tip b{font-family:var(--display);font-weight:400;margin-right:4px}
+.tip.warm{background:var(--mustard-soft)} .tip.cool{background:var(--sea-soft)} .tip.pink{background:var(--sakura-soft)}
+
+/* 요약 */
+.summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.summary div{background:var(--paper);border-radius:16px;padding:10px 12px;border:1px solid var(--line)}
+.summary small{display:block;color:var(--sub);font-size:12px}
+.summary strong{font-family:var(--display);font-weight:400;font-size:19px}
+.mapwrap{margin-top:12px}
+.mapwrap svg{display:block;width:100%;height:auto}
+.m-sea{fill:var(--sea-soft)} .m-land{fill:var(--paper)}
+.m-line{fill:none;stroke-width:3.5;stroke-linecap:round;stroke-linejoin:round}
+.m-lbl{font-family:var(--body);font-size:12.5px;fill:var(--ink);paint-order:stroke;stroke:var(--paper);stroke-width:4px}
+.m-sm{font-size:10.5px;fill:var(--sub)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12.5px;color:var(--sub);margin-top:8px}
+.legend i{display:inline-block;width:18px;height:4px;border-radius:2px;margin-right:5px;vertical-align:middle}
+
+/* 날짜 */
+.dayband{border-radius:22px;padding:16px;color:var(--ink)}
+.d1 .dayband{background:var(--sakura-soft)} .d2 .dayband{background:var(--sea-soft)} .d3 .dayband{background:var(--persimmon-soft)} .d4 .dayband{background:var(--leaf-soft)}
+.d1{--day:var(--sakura)} .d2{--day:var(--sea)} .d3{--day:var(--persimmon)} .d4{--day:var(--leaf)}
+.dayband .date{font-size:13px;color:var(--sub)}
+.dayband h2{margin:2px 0 8px;font-size:24px;line-height:1.25}
+.dayband h2 em{font-style:normal;color:var(--day)}
+.wx{display:flex;flex-wrap:wrap;gap:6px}
+.wx span{background:var(--paper);border-radius:999px;padding:3px 10px;font-size:13px}
+.wx span b{font-weight:400;font-family:var(--display);color:var(--day)}
+
+/* 경로 */
+.route{list-style:none;margin:12px 0 0;padding:0;display:flex;flex-wrap:wrap;align-items:center;gap:6px 4px}
+.route li{display:flex;align-items:center;gap:4px;font-size:13.5px}
+.route .stop{background:var(--paper);border:1.5px solid var(--day);border-radius:12px;padding:3px 9px}
+.route .mode{font-size:11.5px;color:var(--sub)}
+.route .mode::before{content:"→ ";color:var(--day)}
+
+/* 타임라인 */
+.tl{list-style:none;margin:14px 0 0;padding:0;position:relative}
+.tl::before{content:"";position:absolute;left:52px;top:6px;bottom:6px;width:2px;background:repeating-linear-gradient(var(--line) 0 6px,transparent 6px 11px)}
+.tl li{display:grid;grid-template-columns:44px 1fr;gap:0 18px;padding:7px 0;position:relative}
+.tl li::before{content:"";position:absolute;left:47px;top:14px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--day)}
+.tl li.move::before{background:var(--day)}
+.tl time{font-size:13px;color:var(--sub);text-align:right;padding-top:3px}
+.tl .what{min-width:0}
+.tl .what strong{font-weight:700}
+.tl .what .meta{display:block;font-size:12.5px;color:var(--sub)}
+.tag{display:inline-block;font-size:11.5px;border-radius:6px;padding:0 6px;margin-left:4px;vertical-align:1px}
+.tag.pass{background:var(--sea-soft);color:var(--sea)}
+.tag.book{background:var(--sakura-soft);color:var(--sakura)}
+.tag.check{background:var(--mustard-soft);color:var(--mustard)}
+
+/* 추천 카드 */
+.picks h3{display:flex;align-items:center;gap:8px}
+.picks h3 svg{width:24px;height:24px}
+.pickgrid{display:grid;gap:8px}
+.pick{display:grid;grid-template-columns:1fr auto;gap:2px 10px;align-items:start;border:1.5px solid var(--line);border-radius:16px;padding:11px 12px;background:var(--bg)}
+.pick .name{font-weight:700;font-size:15px;min-width:0}
+.pick .name small{font-weight:400;color:var(--sub);font-size:12px;margin-left:4px}
+.pick p{grid-column:1/-1;margin:0;font-size:13.5px;color:var(--ink)}
+.pick .links{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.pick .links a{font-size:12.5px;text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:3px 10px;background:var(--paper)}
+.star{grid-row:1;grid-column:2;border:0;background:none;cursor:pointer;padding:2px;min-width:40px;min-height:40px;display:grid;place-items:center;color:var(--sub);font:inherit}
+.star svg{width:26px;height:26px}
+.star .lbl{font-size:10.5px;line-height:1}
+.pick.on{border-color:var(--day);background:var(--paper)}
+.pick.on .star{color:var(--day)}
+.pick.on .star path{fill:currentColor}
+.pick .warnline{grid-column:1/-1;font-size:12.5px;color:var(--persimmon);margin-top:2px}
+.pick .price{grid-column:1/-1;font-family:var(--display);font-size:15px;color:var(--day)}
+.pick .price small{font-family:var(--body);font-size:12px;color:var(--sub);margin-left:4px}
+.badge{display:inline-block;font-family:var(--body);font-size:11px;border-radius:999px;padding:1px 8px;margin-left:6px;background:var(--day);color:var(--paper);vertical-align:2px}
+.picks.stay h3 svg{width:24px;height:24px}
+
+/* 비용 */
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{padding:8px 6px;border-bottom:1px solid var(--line);text-align:right;font-variant-numeric:tabular-nums}
+th:first-child,td:first-child{text-align:left}
+thead th{font-weight:400;color:var(--sub);font-size:12.5px}
+tfoot td{border-bottom:0;font-family:var(--display);font-size:17px;padding-top:12px}
+.tablewrap{overflow-x:auto}
+.fx{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:12px;font-size:14px}
+.fx input{width:84px;font:inherit;padding:6px 8px;border-radius:10px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);text-align:right}
+.bigsum{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:12px}
+.bigsum div{border-radius:16px;padding:12px;background:var(--mustard-soft)}
+.bigsum small{display:block;font-size:12.5px;color:var(--sub)}
+.bigsum strong{font-family:var(--display);font-weight:400;font-size:24px}
+
+/* 날씨 */
+.wxgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px}
+.wxcard{border-radius:16px;padding:12px;background:var(--bg);border:1px solid var(--line)}
+.wxcard .city{font-family:var(--display);font-size:16px}
+.wxcard .t{font-size:13px;color:var(--sub)}
+.thermo{height:8px;border-radius:4px;background:var(--line);position:relative;margin:8px 0 6px}
+.thermo i{position:absolute;top:0;bottom:0;border-radius:4px;background:linear-gradient(90deg,var(--sea),var(--persimmon))}
+.wxcard a{font-size:12.5px}
+.countdown{font-family:var(--display);font-size:18px}
+.wearlist{display:grid;grid-template-columns:auto 1fr;gap:8px 12px;margin:0}
+.wearlist dt{font-family:var(--display);color:var(--sea)}
+.wearlist dd{margin:0;min-width:0}
+
+/* 체크리스트 */
+.progress{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.progress .bar{flex:1;height:10px;border-radius:5px;background:var(--line);overflow:hidden}
+.progress .bar i{display:block;height:100%;background:var(--leaf);border-radius:5px;width:0;transition:width .3s}
+.group h3{font-size:16.5px;margin:14px 0 2px}
+.group:first-of-type h3{margin-top:4px}
+.check{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-top:1px dashed var(--line);cursor:pointer}
+.check input{width:21px;height:21px;margin:2px 0 0;accent-color:var(--leaf);flex:0 0 auto}
+.check span{min-width:0}
+.check small{display:block;color:var(--sub);font-size:12.5px}
+.check input:checked + span{color:var(--sub);text-decoration:line-through}
+.mypicks ul{margin:6px 0 0;padding-left:18px}
+.mypicks li{margin:2px 0}
+button.reset{font:inherit;font-size:13.5px;background:none;border:1.5px solid var(--line);color:var(--sub);border-radius:12px;padding:8px 14px;cursor:pointer;margin-top:12px}
+footer{margin-top:28px;color:var(--sub);font-size:12.5px}
+@media (min-width:600px){.hero h1{font-size:36px}.pickgrid{grid-template-columns:1fr 1fr}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-train" viewBox="0 0 40 40"><circle cx="20" cy="20" r="19" fill="var(--sea-soft)"/><rect x="11" y="9" width="18" height="19" rx="5" fill="var(--sea)"/><rect x="14" y="12" width="12" height="6" rx="2" fill="var(--paper)"/><circle cx="15.5" cy="23" r="1.8" fill="var(--paper)"/><circle cx="24.5" cy="23" r="1.8" fill="var(--paper)"/><path d="M14 29l-3 4M26 29l3 4" stroke="var(--sea)" stroke-width="2.2" stroke-linecap="round"/></symbol>
+  <symbol id="i-bowl" viewBox="0 0 40 40"><circle cx="20" cy="20" r="19" fill="var(--persimmon-soft)"/><path d="M8 19h24a12 12 0 0 1-24 0z" fill="var(--persimmon)"/><path d="M12 19c2-4 4 0 6-4s4 0 6-4 4 0 6-3" stroke="var(--mustard)" stroke-width="1.8" fill="none" stroke-linecap="round"/><path d="M24 7l7 11M28 6l5 12" stroke="var(--ink)" stroke-width="1.6" stroke-linecap="round"/><ellipse cx="20" cy="31.5" rx="5" ry="1.6" fill="var(--persimmon)"/></symbol>
+  <symbol id="i-castle" viewBox="0 0 40 40"><circle cx="20" cy="20" r="19" fill="var(--leaf-soft)"/><path d="M10 31h20v-6H10z" fill="var(--paper)" stroke="var(--leaf)" stroke-width="1.6"/><path d="M8 25l12-6 12 6z" fill="var(--leaf)"/><path d="M13 19h14v-4H13z" fill="var(--paper)" stroke="var(--leaf)" stroke-width="1.6"/><path d="M11 15l9-6 9 6z" fill="var(--leaf)"/><rect x="18" y="26" width="4" height="5" fill="var(--leaf)"/></symbol>
+  <symbol id="i-wave" viewBox="0 0 40 40"><circle cx="20" cy="20" r="19" fill="var(--sakura-soft)"/><circle cx="26" cy="13" r="4.5" fill="var(--persimmon)"/><path d="M6 22c4-4 6 0 10-3s6 0 10-3 6 0 8-2v12H6z" fill="var(--sea)"/><path d="M6 27c4-3 6 0 10-2s6 0 10-2 6 0 8-1" stroke="var(--paper)" stroke-width="1.6" fill="none" stroke-linecap="round"/></symbol>
+  <symbol id="i-coin" viewBox="0 0 40 40"><circle cx="20" cy="20" r="19" fill="var(--mustard-soft)"/><circle cx="20" cy="20" r="10" fill="var(--mustard)"/><circle cx="20" cy="20" r="3.5" fill="var(--mustard-soft)"/><path d="M14 13l3 4M26 13l-3 4" stroke="var(--paper)" stroke-width="1.6" stroke-linecap="round"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 40 40"><circle cx="20" cy="20" r="19" fill="var(--sea-soft)"/><circle cx="16" cy="16" r="6" fill="var(--mustard)"/><path d="M13 30h17a5 5 0 0 0-1-10 7 7 0 0 0-13 2 4 4 0 0 0-3 8z" fill="var(--paper)" stroke="var(--sea)" stroke-width="1.6"/></symbol>
+  <symbol id="i-check" viewBox="0 0 40 40"><circle cx="20" cy="20" r="19" fill="var(--leaf-soft)"/><rect x="11" y="9" width="18" height="23" rx="3" fill="var(--paper)" stroke="var(--leaf)" stroke-width="1.6"/><path d="M14.5 16l2 2 3.5-4M14.5 24l2 2 3.5-4" stroke="var(--leaf)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 16h4M22 24h4" stroke="var(--line)" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3.2l2.6 5.4 5.9.8-4.3 4.1 1 5.8L12 16.5l-5.2 2.8 1-5.8L3.5 9.4l5.9-.8z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></symbol>
+  <symbol id="i-bed" viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="var(--mustard-soft)"/><path d="M5 16V8M5 13h14v3M19 16v-3" stroke="var(--mustard)" stroke-width="1.8" fill="none" stroke-linecap="round"/><rect x="7" y="10" width="4" height="3" rx="1.2" fill="var(--mustard)"/><path d="M12 10h5a2 2 0 0 1 2 2v1h-7z" fill="var(--mustard)"/></symbol>
+  <symbol id="i-bag" viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="var(--sakura-soft)"/><path d="M7 9h10l-1 9H8z" fill="var(--sakura)"/><path d="M9.5 9V7.5a2.5 2.5 0 0 1 5 0V9" stroke="var(--ink)" stroke-width="1.3" fill="none"/></symbol>
+  <symbol id="i-fun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="var(--sea-soft)"/><path d="M7 15l3-6 3 4 2-2 3 4z" fill="var(--sea)"/></symbol>
+  <symbol id="i-eat" viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="var(--persimmon-soft)"/><path d="M6 12h12a6 6 0 0 1-12 0z" fill="var(--persimmon)"/><path d="M14 5l3 6M16.5 4.5l2 6.5" stroke="var(--ink)" stroke-width="1.2" stroke-linecap="round"/></symbol>
+</svg>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow">2027. 1. 22 금 → 1. 25 월 · 3박 4일 · 5명 자유여행</div>
+  <h1>구라시키<span class="dot">·</span>다카마쓰<span class="dot">·</span>오사카<br>세토우치 겨울 기차여행</h1>
+  <p>간사이 와이드 패스 한 장으로 운하 마을, 우동 섬, 하얀 성, 우메다 야경까지 돌아요. 별(☆)을 눌러 마음에 드는 곳을 고르면 맨 아래 체크리스트에 모여요.</p>
+  <div class="stamp-row">
+    <span class="stamp"><svg><use href="#i-train"/></svg>간사이 와이드 패스 12,000엔</span>
+    <span class="stamp"><svg><use href="#i-coin"/></svg>1인 약 67만 원</span>
+    <span class="stamp"><svg><use href="#i-sun"/></svg>낮 9–10° · 밤 0–3°</span>
+  </div>
+</header>
+
+<nav class="chips" aria-label="바로가기"><div class="chiprow">
+  <a class="chip" href="#overview"><b>한눈</b>경로</a>
+  <a class="chip d1" href="#day1"><b>1.22</b>구라시키</a>
+  <a class="chip d2" href="#day2"><b>1.23</b>다카마쓰</a>
+  <a class="chip d3" href="#day3"><b>1.24</b>히메지·오사카</a>
+  <a class="chip d4" href="#day4"><b>1.25</b>출국</a>
+  <a class="chip" href="#cost"><b>₩</b>비용</a>
+  <a class="chip" href="#weather"><b>☁</b>날씨·옷</a>
+  <a class="chip" href="#checklist"><b>✓</b>체크</a>
+</div></nav>
+
+<!-- 한눈에 -->
+<section id="overview">
+  <div class="sechead"><svg><use href="#i-train"/></svg><h2>한눈에 보는 경로<span class="sub">구라시키 1박 → 다카마쓰 1박 → 오사카 1박</span></h2></div>
+  <div class="summary">
+    <div><small>숙박</small><strong>3박</strong></div>
+    <div><small>교통</small><strong>패스 1장</strong></div>
+    <div><small>1인 예산</small><strong class="num">78,810엔</strong></div>
+  </div>
+  <div class="card mapwrap">
+    <svg viewBox="0 0 360 220" role="img" aria-label="간사이공항에서 구라시키, 다카마쓰, 히메지를 거쳐 오사카로 돌아오는 경로 약도">
+      <rect class="m-sea" x="0" y="0" width="360" height="220" rx="14"/>
+      <path class="m-land" d="M0 0h360v96c-30 8-52 2-78 10s-48 22-80 18-60-14-92-10S30 120 0 112z"/>
+      <path class="m-land" d="M40 220c10-34 40-48 86-50s84 8 120 2 60 10 72 48z"/>
+      <path class="m-land" d="M300 150c14-8 30-6 42 4s16 30 4 50h-46c-8-18-12-40 0-54z"/>
+      <text class="m-sm" x="150" y="148">세토 내해</text>
+      <text class="m-sm" x="170" y="208">시코쿠</text>
+      <!-- day1 -->
+      <path class="m-line" stroke="var(--sakura)" d="M318 172 C312 120 300 92 290 72 C250 66 190 64 120 70 C100 72 88 76 76 82"/>
+      <!-- day2 -->
+      <path class="m-line" stroke="var(--sea)" stroke-dasharray="1 0" d="M76 82 L118 72 M118 74 C126 110 134 140 142 168"/>
+      <!-- day3 -->
+      <path class="m-line" stroke="var(--persimmon)" stroke-dasharray="7 6" d="M142 168 C134 140 126 110 122 76 C160 64 200 60 214 58 C240 58 268 64 290 72"/>
+      <!-- day4 -->
+      <path class="m-line" stroke="var(--leaf)" d="M292 70 C306 96 316 132 320 170"/>
+      <g>
+        <circle cx="318" cy="174" r="6" fill="var(--paper)" stroke="var(--ink)" stroke-width="2"/><text class="m-lbl" x="306" y="196" text-anchor="end">간사이공항</text>
+        <circle cx="290" cy="70" r="6" fill="var(--paper)" stroke="var(--ink)" stroke-width="2"/><text class="m-lbl" x="296" y="58">오사카·우메다</text>
+        <circle cx="214" cy="58" r="5" fill="var(--paper)" stroke="var(--ink)" stroke-width="2"/><text class="m-lbl" x="214" y="44" text-anchor="middle">히메지</text>
+        <circle cx="120" cy="72" r="5" fill="var(--paper)" stroke="var(--ink)" stroke-width="2"/><text class="m-lbl" x="124" y="58">오카야마</text>
+        <circle cx="76" cy="82" r="6" fill="var(--paper)" stroke="var(--ink)" stroke-width="2"/><text class="m-lbl" x="70" y="104" text-anchor="middle">구라시키</text>
+        <circle cx="142" cy="170" r="6" fill="var(--paper)" stroke="var(--ink)" stroke-width="2"/><text class="m-lbl" x="150" y="186">다카마쓰</text>
+        <text class="m-sm" x="138" y="124">세토대교</text>
+      </g>
+    </svg>
+    <div class="legend">
+      <span><i style="background:var(--sakura)"></i>1일차</span><span><i style="background:var(--sea)"></i>2일차</span>
+      <span><i style="background:var(--persimmon)"></i>3일차</span><span><i style="background:var(--leaf)"></i>4일차</span>
+    </div>
+    <p class="muted" style="margin:6px 0 0">약도라 거리와 방향은 대략입니다. 하루카·산요 신칸센(신오사카–오카야마)·마린라이너가 모두 패스에 포함돼요. 패스는 5일 연속 사용이라 4일 일정에 하루 여유가 있어요.</p>
+  </div>
+</section>
+
+<!-- DAY 1 -->
+<section id="day1" class="d1">
+  <div class="dayband">
+    <div class="date">1일차 · 1.22 금요일</div>
+    <h2>간사이공항 → <em>구라시키</em> 운하 야경</h2>
+    <div class="wx"><span>구라시키 평년 <b>최고 9° · 최저 0°</b></span><span>일몰 약 17:20</span><span>숙박 구라시키 호텔</span></div>
+    <ol class="route">
+      <li><span class="stop">간사이공항</span></li><li class="mode">하루카</li>
+      <li><span class="stop">신오사카</span></li><li class="mode">산요 신칸센</li>
+      <li><span class="stop">오카야마</span></li><li class="mode">산요선 17분</li>
+      <li><span class="stop">구라시키</span></li>
+    </ol>
+  </div>
+  <div class="card">
+    <h3>시간표</h3>
+    <ol class="tl">
+      <li><time>15:00</time><div class="what"><strong>입국 · 패스 교환, 전 구간 지정석 예약</strong><span class="meta">공항 JR 발권기에서 QR로 발권 · 1시간 15분</span></div></li>
+      <li class="move"><time>16:15</time><div class="what"><strong>하루카 → 신오사카 → 신칸센 → 오카야마 → 구라시키</strong><span class="tag pass">패스</span><span class="meta">약 2시간 30분 · 신오사카 환승 시간 넉넉히</span></div></li>
+      <li><time>19:00</time><div class="what"><strong>호텔 체크인</strong><span class="meta">30분</span></div></li>
+      <li><time>19:30</time><div class="what"><strong>미관지구 운하 야경 산책 먼저</strong><span class="tag check">순서 변경</span><span class="meta">겨울(10~3월) 경관 조명은 일몰~21:00까지라, 저녁 뒤로 미루면 불이 꺼져요 · 무료</span></div></li>
+      <li><time>20:00</time><div class="what"><strong>미관지구에서 저녁</strong><span class="tag book">5인 예약</span><span class="meta">아래 먹을거리 중 고르기 · 1인 약 4,000엔</span></div></li>
+      <li><time>21:30</time><div class="what"><strong>바에서 2차</strong><span class="meta">~23:00 · 1인 약 3,000엔</span></div></li>
+    </ol>
+    <div class="tip warm"><b>바꾼 점</b>원래 일정은 21:00에 야경 산책이었는데, 겨울엔 조명이 21:00에 꺼져요. 체크인 직후 산책 → 20:00 저녁으로 순서를 바꿨어요. 식당 예약도 20:00로 잡으세요.</div>
+  </div>
+  <div class="card picks">
+    <h3><svg><use href="#i-fun"/></svg>즐길거리</h3>
+    <div class="pickgrid">
+      <div class="pick" data-id="d1-canal"><div class="name">구라시키강 운하 야경<small>미관지구</small></div><button class="star" type="button" aria-pressed="false" aria-label="고르기"><svg><use href="#i-star"/></svg><span class="lbl">고르기</span></button><p>버드나무 늘어진 운하와 흰 벽 창고에 불이 들어와요. 나카바시 다리 위가 사진 명당.</p><div class="links"><a href="https://www.google.com/maps/search/?api=1&query=倉敷美観地区" target="_blank" rel="noopener">지도</a></div></div>
+      <div class="pick" data-id="d1-ivy"><div class="name">아이비 스퀘어 밤 산책<small>미관지구 남쪽</small></div><button class="star" type="button" aria-pressed="false" aria-label="고르기"><svg><use href="#i-star"/></svg><span class="lbl">고르기</span></button><p>담쟁이 덮인 붉은 벽돌 옛 방적공장. 안뜰이 조용하고 조명이 예뻐요. 2일차 아침에도 지나가요.</p><div class="links"><a href="https://www.google.com/maps/search/?api=1&query=倉敷アイビースクエア" target="_blank" rel="noopener">지도</a></div></div>
+      <div class="pick" data-id="d1-kirameki"><div class="name">구라시키 키라메키노미치<small>구라시키역 앞</small></div><button class="star" type="button" aria-pressed="false" aria-label="고르기"><svg><use href="#i-star"/></svg><span class="lbl">고르기</span></button><p>매년 겨울 역 주변 일루미네이션. 호텔 가는 길에 들르기 좋아요.</p><div class="warnline">올겨울 개최 여부와 기간은 확인 필요</div><div class="links"><a href="https://www.okayama-kanko.jp/okatabi/1400/page" target="_blank" rel="noopener">작년 안내</a></div></div>
+    </div>
+  </div>
+  <div class="card picks">
+    <h3><svg><use href="#i-eat"/></svg>먹을거리 · 저녁과 2차</h3>
+    <div class="pickgrid">
+      <div class="pick" data-id="d1-takataya"><div class="name">다카타야<small>야키토리 · 미관지구</small></div><button class="star" type="button" aria-pressed="false" aria-label="고르기"><svg><use href="#i-star"/></svg><span class="lbl">고르기</span></button><p>원래 일정 후보. 미관지구 안 꼬치구이 집이라 산책 동선과 딱 맞아요.</p><div class="links"><a href="https://www.google.com/maps/search/?api=1&query=高田屋+倉敷+焼鳥" target="_blank" rel="noopener">지도</a></div></div>
+      <div class="pick" data-id="d1-fujita"><div class="name">후지타<small>원래 후보</small></div><button class="star" type="button" aria-pressed="false" aria-label="고르기"><svg><use href="#i-star"/></svg><span class="lbl">고르기</span></button><p>원래 일정에 있던 후보예요. 5명 자리가 되는지 예약할 때 확인하세요.</p><div class="links"><a href="https://www.google.com/maps/search/?api=1&query=倉敷+美観地区+ふじた" target="_blank" rel="noopener">지도 검색</a></div></div>
+      <div class="pick" data-id="d1-sawaraya"><div class="name">사와라야<small>원래 후보</small></div><button class="star" type="button" aria-pressed="false" aria-label="고르기"><svg><use href="#i-star"/></svg><span class="lbl">고르기</span></button><p>세토 내해 삼치(사와라) 요리를 내는 곳으로 후보에 올라 있던 집. 영업시간 확인 후 예약.</p><div class="links"><a href="https://www.google.com/maps/search/?api=1&query=倉敷+さわら屋" target="_blank" rel="noopener">지도 검색</a></div></div>
+      <div class="pick" data-id="d1-kashiwaya"><div class="name">가시와야 고바야시<small>야키토리 · 역 5분</small></div><button class="star" type="button" aria-pressed="false" aria-label="고르기"><svg><use href="#i-star"/></svg><span class="lbl">고르기</span></button><p>타베로그 야키토리 WEST 100에 꼽힌 집. 흑사쓰마 닭을 비장탄에 구워요. 개별실 있음. 1인 8,000~10,000엔으로 예산보다 비싸요.</p><div class="links"><a href="https://tabelog.com/kr/okayama/A3302/" target="_blank" rel="noopener">타베로그</a></div></div>
+      <div class="pick" data-id="d1-bars"><div class="name">2차 바 세 곳<small>미관지구</small></div><button class="star" type="button" aria-pressed="false" aria-label="고르기"><svg><use href="#i-star"/></svg><span class="lbl">고르기</span></button><p>원래 후보: 살롱 드 릭스, 바 쿠오레, 헤이사 바. 작은 바가 많아 5명이면 전화로 자리부터 확인하세요.</p><div class="links"><a href="https://www.google.com/maps/search/?api=1&query=倉敷+美観地区+バー" target="_blank" rel="noopener">주변 바 지도</a></div></div>
+    </div>
+  </div>
+  <div class="card picks stay">
+    <h3><svg><use href="#i-bed"/></svg>숙소 추천 · 예산 1인 12,000엔</h3>
+    <div class="pickgrid">
+      <div class="pick" data-id="h1-kokusai"><div class="name">구라시키 국제호텔<span class="badge">추천</span><small>미관지구 바로 옆</small></div><button class="star" type="button" aria-pressed="false" aria-label="고르기"><svg><use href="#i-star"/></svg><span class="lbl">고르기</span></button><div class="price">트윈 1실 약 15,700~20,600엔<small>2인 1실이면 1인 약 8,000~10,300엔</small></div><p>아이비 스퀘어·오하라 미술관과 붙어 있어 밤 산책과 2일차 아침 동선이 가장 짧아요. 구라시키역 도보 8분.</p><div class="links"><a href="https://www.google.com/maps/search/?api=1&query=倉敷国際ホテル" target="_blank" rel="noopener">지도</a><a href="https://www.mapple.net/article/11298/" target="_blank" rel="noopener">소개</a></div></div>
+      <div class="pick" data-id="h1-ivy"><div class="name">구라시키 아이비 스퀘어<small>옛 방적공장 호텔</small></div><button class="star" type="button" aria-pressed="false" aria-label="고르기"><svg><use href="#i-star"/></svg><span class="lbl">고르기</span></button><div class="price">조식 포함 트윈 1인 10,200엔~<small>날짜에 따라 최대 30,500엔</small></div><p>담쟁이 덮인 붉은 벽돌 건물 안에서 자는 경험. 미관지구 안이라 야경 보고 바로 들어가요. 역 도보 약 15분이라 짐은 택시 추천.</p><div class="links"><a href="https://www.google.com/maps/search/?api=1&query=倉敷アイビースクエア" target="_blank" rel="noopener">지도</a><a href="https://yado.knt.co.jp/planlist/S330029/" target="_blank" rel="noopener">요금 보기</a></div></div>
+      <div class="pick" data-id="h1-universal"><div class="name">구라시키역 앞 유니버설 호텔<small>역 앞 · 가성비</small></div><button class="star" type="button" aria-pressed="false" aria-label="고르기"><svg><use href="#i-star"/></svg><span class="lbl">고르기</span></button><div class="price">비즈니스 호텔 가격대<small>요금은 날짜 넣고 확인</small></div><p>무료 조식·석식, 대욕장과 사우나가 있다고 소개돼요. 남성 일행 1인실로 잡기 좋아요.</p><div class="links"><a href="https://www.google.com/maps/search/?api=1&query=倉敷駅前ユニバーサルホテル" target="_blank" rel="noopener">지도</a></div></div>
+    </div>
+    <div class="tip warm"><b>고르는 법</b>분위기는 아이비 스퀘어, 동선과 가격 균형은 국제호텔이에요. 두 곳 모두 예산 안에 들어가요.</div>
+  </div>
+</section>
+
+<!-- DAY 2 -->
+<section id="day2" class="d2">
+  <div class="dayband">
+    <div class="date">2일차 · 1.23 토요일</div>
+    <h2>구라시키 아침 → <em>세토대교</em> 건너 다카마쓰</h2>
+    <div class="wx"><span>다카마쓰 평년 <b>최고 10° · 최저 2°</b></span><span>일몰 약 17:25</span><span>숙박 다카마쓰 비즈니스 호텔</span></div>
+    <ol class="route">
+      <li><span class="stop">구라시키</span></li><li class="mode">산요선 17분</li>
+      <li><span class="stop">오카야마</span></li><li class="mode">마린라이너 55분</li>
+      <li><span class="stop">다카마쓰</span></li>
+    </ol>
+  </div>
+  <div class="card">
+    <h3>시간표</h3>
+    <ol class="tl">
+      <li><time>08:00</time><div class="what"><strong>미관지구 아침 산책 · 오하라 미술관 · 아이비 스퀘어 · 커피</strong><span class="meta">3시간 · 조식 1,000 / 미술관 2,000 / 커피 700엔</span></div></li>
+      <li class="move"><time>11:15</time><div class="what"><strong>구라시키 → 오카야마</strong><span class="tag pass">패스</span><span class="meta">17분 · 호텔 짐은 들고 이동</span></div></li>
+      <li><time>11:40</time><div class="what"><strong>점심 · 오카야마 데미카쓰동</strong><span class="meta">1시간 · 1,200엔 · 토요일 11:00 오픈이라 시간이 딱 맞아요</span></div></li>
+      <li class="move"><time>13:00</time><div class="what"><strong>마린라이너로 세토대교 건너 다카마쓰</strong><span class="tag pass">패스</span><span class="meta">55분 · 1층 맨 앞 지정석이면 바다 전망 최고</span></div></li>
+      <li><time>14:30</time><div class="what"><strong>리쓰린 공원</strong><span class="meta">2시간 · 약 410엔(요금 확인)</span></div></li>
+      <li><time>16:30</time><div class="what"><strong>기타하마 앨리 · 바닷가 석양</strong><span class="meta">1시간 30분 · 일몰 17:25 전후</span></div></li>
+      <li><time>18:00</time><div class="what"><strong>저녁 · 호네쓰키도리와 맥주</strong><span class="meta">1인 약 3,000엔</span></div></li>
+    </ol>
+    <div class="tip cool"><b>미리 확인</b>오하라 미술관은 월요일 휴관이라 토요일은 괜찮아요. 다만 겨울(12~2월)에는 관람 시간을 줄여 운영한 적이 있으니 공식 사이트에서 시간을 확인하세요.</div>
+  </div>
+  <div class="card picks">
+    <h3><svg><use href="#i-fun"/></svg>즐길거리</h3>
+    <div class="pickgrid">
+      <div class="pick" data-id="d2-ohara"><div class="name">오하라 미술관<small>구라시키</small></div><button class="star" type="button" aria-pressed="false" aria-label="고르기"><svg><use href="#i-star"/></svg><span class="lbl">고르기</span></button><p>일본 최초의 서양 미술 중심 사립 미술관. 엘 그레코 '수태고지', 모네 '수련'이 있어요. 2026년 4월 리노베이션 후 다시 열었어요.</p><div class="links"><a href="https://www.google.com/maps/search/?api=1&query=大原美術館" target="_blank" rel="noopener">지도</a><a href="https://haveagood-holiday.com/ko/articles/ohara-museum-of-art-reopening-2026" target="_blank" rel="noopener">재개관 안내</a></div></div>
+      <div class="pick" data-id="d2-coffee"><div class="name">구라시키 커피관<small>미관지구</small></div><button class="star" type="button" aria-pressed="false" aria-label="고르기"><svg><use href="#i-star"/></svg><span class="lbl">고르기</span></button><p>운하 옆 오래된 다방. 어두운 나무 인테리어에서 진한 커피 한 잔.</p><div class="links"><a href="https://www.google.com/maps/search/?api=1&query=倉敷珈琲館" target="_blank" rel="noopener">지도</a></div></div>
+      <div class="pick" data-id="d2-ritsurin"><div class="name">리쓰린 공원<small>다카마쓰</small></div><button class="star" type="button" aria-pressed="false" aria-label="고르기"><svg><use href="#i-star"/></svg><span class="lbl">고르기</span></button><p>소나무가 멋진 다이묘 정원. 기쿠게쓰테이 찻집에서 말차와 화과자를 곁들이면 겨울에도 운치 있어요.</p><div class="warnline">입장료가 자료마다 410엔/500엔으로 달라요 · 현장 확인</div><div class="links"><a href="https://www.google.com/maps/search/?api=1&query=栗林公園" target="_blank" rel="noopener">지도</a></div></div>
+      <div class="pick" data-id="d2-kitahama"><div class="name">기타하마 앨리<small>항구 창고 거리</small></div><button class="star" type="button" aria-pressed="false" aria-label="고르기"><svg><use href="#i-star"/></svg><span class="lbl">고르기</span></button><p>옛 창고를 고친 카페·소품숍·서점 골목. 가게가 일찍 닫는다는 후기가 있어 16시 반이면 서둘러야 해요.</p><div class="links"><a href="https://www.google.com/maps/search/?api=1&query=北浜alley" target="_blank" rel="noopener">지도</a></div></div>
+      <div class="pick" data-id="d2-lighthouse"><div class="name">선포트 빨간 등대<small>세토 시루베</small></div><button class="star" type="button" aria-pressed="false" aria-label="고르기"><svg><use href="#i-star"/></svg><span class="lbl">고르기</span></button><p>유리로 된 빨간 등대까지 방파제를 걸어가며 석양 보기. 기타하마 앨리에서 걸어갈 수 있어요.</p><div class="links"><a href="https://www.google.com/maps/search/?api=1&query=せとしるべ+高松" target="_blank" rel="noopener">지도</a></div></div>
+      <div class="pick" data-id="d2-tamamo"><div class="name">다마모 공원<small>다카마쓰 성터</small></div><button class="star" type="button" aria-pressed="false" aria-label="고르기"><svg><use href="#i-star"/></svg><span class="lbl">고르기</span></button><p>바닷물을 끌어온 해자에 도미가 헤엄치는 성터. 다카마쓰역 바로 앞이라 짧게 들르기 좋아요.</p><div class="links"><a href="https://www.google.com/maps/search/?api=1&query=玉藻公園" target="_blank" rel="noopener">지도</a></div></div>
+    </div>
+  </div>
+  <div class="card picks">
+    <h3><svg><use href="#i-eat"/></svg>먹을거리</h3>
+    <div class="pickgrid">
+      <div class="pick" data-id="d2-nomura"><div class="name">가쓰동 노무라<small>오카야마 · 데미카쓰동 원조</small></div><button class="star" type="button" aria-pressed="false" aria-label="고르기"><svg><use href="#i-star"/></svg><span class="lbl">고르기</span></button><p>1931년 창업한 데미카쓰동 원조집. 토요일 11:00~14:30, 월요일 휴무. 오카야마역에서 걸어서 약 10분.</p><div class="links"><a href="https://www.google.com/maps/search/?api=1&query=カツ丼野村+岡山" target="_blank" rel="noopener">지도</a><a href="https://www.okayama-kanko.jp/gourmet/14346" target="_blank" rel="noopener">관광협회</a></div></div>
+      <div class="pick" data-id="d2-ikkaku"><div class="name">잇카쿠 다카마쓰점<small>호네쓰키도리</small></div><button class="star" type="button" aria-pressed="false" aria-label="고르기"><svg><use href="#i-star"/></svg><span class="lbl">고르기</span></button><p>뼈째 구운 닭다리 '호네쓰키도리'의 대표 집. 질긴 '오야'와 부드러운 '히나' 둘 다 시켜 나눠 드세요. 토요일 11:00~23:00, 화요일 휴무. ☎ 087-823-3711</p><div class="links"><a href="https://www.google.com/maps/search/?api=1&query=一鶴+高松店" target="_blank" rel="noopener">지도</a></div></div>
+      <div class="pick" data-id="d2-ranmaru"><div class="name">호네쓰키도리 란마루<small>가타하라마치</small></div><button class="star" type="button" aria-pressed="false" aria-label="고르기"><svg><use href="#i-star"/></svg><span class="lbl">고르기</span></button><p>잇카쿠가 붐비면 갈 만한 다른 호네쓰키도리 집. 상점가 근처예요.</p><div class="links"><a href="https://tabelog.com/kagawa/A3701/A370101/37005271/" target="_blank" rel="noopener">타베로그</a></div></div>
+    </div>
+  </div>
+  <div class="card picks stay">
+    <h3><svg><use href="#i-bed"/></svg>숙소 추천 · 예산 1인 8,000엔</h3>
+    <div class="pickgrid">
+      <div class="pick" data-id="h2-clementinn"><div class="name">JR 클레멘트 인 다카마쓰<span class="badge">추천</span><small>다카마쓰역 도보 1분</small></div><button class="star" type="button" aria-pressed="false" aria-label="고르기"><svg><use href="#i-star"/></svg><span class="lbl">고르기</span></button><div class="price">비즈니스 호텔 가격대<small>예산 8,000엔 안팎 · 날짜 넣고 확인</small></div><p>대욕장, 고르는 베개, 1층 편의점·카페. 3일차 아침 우동(메리켄야 역전점)과 마린라이너가 바로 앞이라 짐 들고 움직이기 편해요.</p><div class="links"><a href="https://www.google.com/maps/search/?api=1&query=JRクレメントイン高松" target="_blank" rel="noopener">지도</a><a href="https://www.jalan.net/yad343988/" target="_blank" rel="noopener">자란</a></div></div>
+      <div class="pick" data-id="h2-clement"><div class="name">JR 호텔 클레멘트 다카마쓰<small>역 도보 1분 · 바다 전망</small></div><button class="star" type="button" aria-pressed="false" aria-label="고르기"><svg><use href="#i-star"/></svg><span class="lbl">고르기</span></button><div class="price">시티 호텔 · 예산 초과 가능<small>자란 평점 4.5</small></div><p>세토 내해가 내려다보이는 고층 객실. 기타하마 앨리·빨간 등대와 가깝고 석양 뒤 바로 쉬기 좋아요.</p><div class="links"><a href="https://www.google.com/maps/search/?api=1&query=JRホテルクレメント高松" target="_blank" rel="noopener">지도</a><a href="https://www.jalan.net/yad302830/" target="_blank" rel="noopener">자란</a></div></div>
+    </div>
+    <div class="tip warm"><b>고르는 법</b>예산 8,000엔이면 클레멘트 인이 맞아요. 하룻밤쯤 바다 전망을 원하면 같은 건물군의 클레멘트로 올리세요.</div>
+  </div>
+</section>
+
+<!-- DAY 3 -->
+<section id="day3" class="d3">
+  <div class="dayband">
+    <div class="date">3일차 · 1.24 일요일</div>
+    <h2>아침 우동 → 하얀 <em>히메지성</em> → 우메다 쇼핑</h2>
+    <div class="wx"><span>히메지 평년 <b>최고 9° · 최저 0°</b></span><span>오사카 <b>10° · 3°</b></span><span>일몰 약 17:20</span><span>숙박 우메다 호텔</span></div>
+    <ol class="route">
+      <li><span class="stop">다카마쓰</span></li><li class="mode">마린라이너</li>
+      <li><span class="stop">오카야마</span></li><li class="mode">신칸센</li>
+      <li><span class="stop">히메지</span></li><li class="mode">신칸센</li>
+      <li><span class="stop">신오사카</span></li><li class="mode">JR 4분</li>
+      <li><span class="stop">오사카</span></li>
+    </ol>
+  </div>
+  <div class="card">
+    <h3>시간표</h3>
+    <ol class="tl">
+      <li><time>08:00</time><div class="what"><strong>아침 우동 순례 2곳</strong><span class="tag check">일요일 영업 확인</span><span class="meta">2시간 · 1인 약 1,000엔</span></div></li>
+      <li class="move"><time>10:30</time><div class="what"><strong>마린라이너 → 오카야마 → 신칸센 → 히메지</strong><span class="tag pass">패스</span><span class="meta">1시간 20분</span></div></li>
+      <li><time>12:00</time><div class="what"><strong>히메지성 + 점심 히메지 오뎅</strong><span class="meta">2시간 30분 · 성 2,500 / 점심 1,500엔 · 짐은 히메지역 코인로커에</span></div></li>
+      <li class="move"><time>14:40</time><div class="what"><strong>신칸센 → 신오사카 → 오사카</strong><span class="tag pass">패스</span><span class="meta">40분</span></div></li>
+      <li><time>15:30</time><div class="what"><strong>호텔 체크인, 짐 내려놓기</strong><span class="meta">쇼핑 짐을 들일 자리를 비워 두세요</span></div></li>
+      <li><time>16:00</time><div class="what"><strong>우메다 스카이빌딩 공중정원 노을</strong><span class="meta">~17:30 · 전망대 2,000엔 · 일몰 약 17:20</span></div></li>
+      <li><time>17:45</time><div class="what"><strong>쇼핑 1 · 백화점·루쿠아·그랑프론트</strong><span class="tag check">20시 전후 마감</span><span class="meta">옷·잡화·과자 선물 먼저 (백화점은 저녁 일찍 닫아요)</span></div></li>
+      <li><time>19:00</time><div class="what"><strong>주류 구입 · 요도바시 우메다 술 매장</strong><span class="meta">10:00~21:00 · 일본주·위스키·맥주 · 오사카역 지하 직결</span></div></li>
+      <li><time>19:45</time><div class="what"><strong>저녁 · 오코노미야키나 구시카쓰</strong><span class="meta">1인 약 4,000엔 · 산 물건은 호텔에 먼저 두고 와도 돼요</span></div></li>
+      <li><time>21:15</time><div class="what"><strong>쇼핑 2 · 돈키호테 우메다 본점</strong><span class="meta">24시간으로 소개 · 과자·약·화장품 마무리</span></div></li>
+    </ol>
+    <div class="tip warm"><b>히메지성 팁</b>천수각 안에서는 신발을 벗고 가파른 계단을 올라요. 양말은 두툼하고 구멍 없는 걸로. 비거주자 성인 2,500엔, 18세 미만 무료예요.</div>
+    <div class="tip pink"><b>바꾼 점</b>쇼핑과 술 사는 시간을 넣느라 나카자키초 골목은 시간표에서 빼고 '즐길거리' 후보로만 남겼어요. 백화점이 20시 전후에 닫아서 쇼핑을 저녁 식사 앞에 두었어요.</div>
+  </div>
+  <div class="card picks">
+    <h3><svg><use href="#i-eat"/></svg>아침 우동 · 일요일 기준</h3>
+    <div class="pickgrid">
+      <div class="pick" data-id="d3-meriken"><div class="name">메리켄야 다카마쓰역전점<small>역 앞 · 07:00~</small></div><button class="star" type="button" aria-pressed="false" aria-label="고르기"><svg><use href="#i-star"/></svg><span class="lbl">고르기</span></button><p>연중무휴로 소개된 셀프 우동집. 마린라이너 타기 전 마지막 한 그릇으로 딱.</p><div class="links"><a href="https://www.google.com/maps/search/?api=1&query=めりけんや+高松駅前店" target="_blank" rel="noopener">지도</a></div></div>
+      <div class="pick" data-id="d3-sakaeda"><div class="name">사카에다 미나미신마치점<small>07:00~17:00</small></div><button class="star" type="button" aria-pressed="false" aria-label="고르기"><svg><use href="#i-star"/></svg><span class="lbl">고르기</span></button><p>1963년 창업한 노포 셀프 우동. 본점은 일요일이 휴무일 수 있어 무휴로 소개된 지점이 안전해요.</p><div class="links"><a href="https://www.google.com/maps/search/?api=1&query=さか枝+南新町" target="_blank" rel="noopener">지도</a></div></div>
+      <div class="pick" data-id="d3-uehara"><div class="name">우에하라야 본점<small>리쓰린 공원 근처</small></div><button class="star" type="button" aria-pressed="false" aria-label="고르기"><svg><use href="#i-star"/></svg><span class="lbl">고르기</span></button><p>현지인이 많이 찾는 셀프 우동. 일요일 영업시간은 확인이 필요해요.</p><div class="warnline">일요일 영업 미확인</div><div class="links"><a href="https://www.google.com/maps/search/?api=1&query=上原屋本店+高松" target="_blank" rel="noopener">지도</a></div></div>
+      <div class="pick" data-id="d3-ajisho"><div class="name">아지쇼<small>다카마쓰역 앞 · 05:00~</small></div><button class="star" type="button" aria-pressed="false" aria-label="고르기"><svg><use href="#i-star"/></svg><span class="lbl">고르기</span></button><p>새벽부터 여는 역 앞 집이지만 토·일·공휴일 휴무라 이번 일정에서는 못 가요.</p><div class="warnline">일요일 휴무 · 이번엔 제외</div></div>
+    </div>
+  </div>
+  <div class="card picks">
+    <h3><svg><use href="#i-fun"/></svg>즐길거리</h3>
+    <div class="pickgrid">
+      <div class="pick" data-id="d3-himeji"><div class="name">히메지성<small>세계유산</small></div><button class="star" type="button" aria-pressed="false" aria-label="고르기"><svg><use href="#i-star"/></svg><span class="lbl">고르기</span></button><p>'백로성'이라 불리는 하얀 성. 역에서 정면으로 걸어 15분이면 성문이에요.</p><div class="links"><a href="https://www.google.com/maps/search/?api=1&query=姫路城" target="_blank" rel="noopener">지도</a></div></div>
+      <div class="pick" data-id="d3-kokoen"><div class="name">고코엔<small>히메지성 옆 정원</small></div><button class="star" type="button" aria-pressed="false" aria-label="고르기"><svg><use href="#i-star"/></svg><span class="lbl">고르기</span></button><p>성 서쪽의 일본 정원 9곳. 시간이 남으면 30분 정도 들르기 좋아요. 별도 요금.</p><div class="links"><a href="https://www.google.com/maps/search/?api=1&query=好古園" target="_blank" rel="noopener">지도</a></div></div>
+      <div class="pick" data-id="d3-nakazaki"><div class="name">나카자키초 카페 골목<small>시간 나면 · 우메다 동쪽</small></div><button class="star" type="button" aria-pressed="false" aria-label="고르기"><svg><use href="#i-star"/></svg><span class="lbl">고르기</span></button><p>옛 민가를 고친 레트로 카페 거리. '카페 태양의 탑'은 일곱 색 멜론소다로 유명해요. 오사카역에서 걸어서 약 15분.</p><div class="links"><a href="https://www.google.com/maps/search/?api=1&query=中崎町+カフェ" target="_blank" rel="noopener">지도</a><a href="https://enjoy-osaka-kyoto-kobe.com/ko/article/nakazaki-cho_cafe/" target="_blank" rel="noopener">카페 모음</a></div></div>
+      <div class="pick" data-id="d3-sky"><div class="name">우메다 스카이빌딩 공중정원<small>2,000엔</small></div><button class="star" type="button" aria-pressed="false" aria-label="고르기"><svg><use href="#i-star"/></svg><span class="lbl">고르기</span></button><p>옥상 원형 전망대에서 노을과 야경을 한 번에. 1월 일몰이 17:20쯤이라 16:50까지 올라가세요.</p><div class="links"><a href="https://www.google.com/maps/search/?api=1&query=梅田スカイビル+空中庭園" target="_blank" rel="noopener">지도</a></div></div>
+    </div>
+  </div>
+  <div class="card picks">
+    <h3><svg><use href="#i-bag"/></svg>주류 구입 · 쇼핑</h3>
+    <div class="pickgrid">
+      <div class="pick" data-id="s-yodobashi"><div class="name">요도바시 우메다 술 매장<small>10:00~21:00</small></div><button class="star" type="button" aria-pressed="false" aria-label="고르기"><svg><use href="#i-star"/></svg><span class="lbl">고르기</span></button><p>일본주·위스키·소주·맥주·안주까지 한곳에. 오사카역·한큐 우메다역과 지하로 이어져요. 술 사러 가기 가장 무난한 곳.</p><div class="links"><a href="https://www.google.com/maps/search/?api=1&query=ヨドバシ梅田" target="_blank" rel="noopener">지도</a><a href="https://www.yodobashi.com/ec/store/0081/" target="_blank" rel="noopener">매장 안내</a></div></div>
+      <div class="pick" data-id="s-hankyu"><div class="name">한큐 백화점 우메다 본점 지하<small>일본주·선물 과자</small></div><button class="star" type="button" aria-pressed="false" aria-label="고르기"><svg><use href="#i-star"/></svg><span class="lbl">고르기</span></button><p>백화점 지하 식품관의 술 코너와 오사카 선물 과자. 선물용 포장을 부탁하기 좋아요.</p><div class="warnline">영업시간 확인 필요 · 저녁 8시 전후 마감 예상</div><div class="links"><a href="https://www.google.com/maps/search/?api=1&query=阪急うめだ本店" target="_blank" rel="noopener">지도</a></div></div>
+      <div class="pick" data-id="s-sanbangai"><div class="name">한큐 삼번가 세이조이시이·구세후쿠상점<small>술 + 식료품</small></div><button class="star" type="button" aria-pressed="false" aria-label="고르기"><svg><use href="#i-star"/></svg><span class="lbl">고르기</span></button><p>술과 함께 조미료·안주·잼 같은 먹을거리 선물을 같이 고르기 좋아요.</p><div class="links"><a href="https://www.google.com/maps/search/?api=1&query=阪急三番街" target="_blank" rel="noopener">지도</a><a href="https://livejapan.com/ja/in-kansai/in-pref-osaka/in-umeda_osaka-station_kitashinchi/article-a2001005/" target="_blank" rel="noopener">우메다 술 가게 10곳</a></div></div>
+      <div class="pick" data-id="s-lucua"><div class="name">루쿠아 오사카<small>쇼핑 10:30~20:30</small></div><button class="star" type="button" aria-pressed="false" aria-label="고르기"><svg><use href="#i-star"/></svg><span class="lbl">고르기</span></button><p>오사카역에 붙은 패션·잡화 빌딩. 식당층은 23시까지라 쇼핑하다 저녁 먹기도 편해요.</p><div class="links"><a href="https://www.google.com/maps/search/?api=1&query=LUCUA+osaka" target="_blank" rel="noopener">지도</a></div></div>
+      <div class="pick" data-id="s-grandfront"><div class="name">그랑 프론트 오사카<small>오사카역 북쪽</small></div><button class="star" type="button" aria-pressed="false" aria-label="고르기"><svg><use href="#i-star"/></svg><span class="lbl">고르기</span></button><p>라이프스타일 편집숍과 브랜드 매장이 많아요. 4일차 하루카 타는 우메키타 쪽과 가까워요.</p><div class="warnline">영업시간 확인 필요</div><div class="links"><a href="https://www.google.com/maps/search/?api=1&query=グランフロント大阪" target="_blank" rel="noopener">지도</a></div></div>
+      <div class="pick" data-id="s-donki"><div class="name">돈키호테 우메다 본점<small>24시간으로 소개</small></div><button class="star" type="button" aria-pressed="false" aria-label="고르기"><svg><use href="#i-star"/></svg><span class="lbl">고르기</span></button><p>과자·약·화장품·술을 늦게까지 살 수 있는 마무리 장소. 오사카역 도보 약 5분.</p><div class="links"><a href="https://www.google.com/maps/search/?api=1&query=ドン・キホーテ梅田本店" target="_blank" rel="noopener">지도</a></div></div>
+    </div>
+    <div class="tip cool"><b>술 살 때</b>한국 들어올 때 술은 <strong>총 2L 이하 · 미화 400달러 이하</strong>까지 면세예요(병 수 제한은 출처마다 달라 관세청 공지 확인). 넘으면 전체에 세금이 붙을 수 있어요. 기내에는 100ml 넘는 액체를 못 들고 타니 술은 부치는 짐에 넣고, 매장에서 완충 포장을 부탁하거나 뽁뽁이·지퍼백을 챙겨 가세요.</div>
+    <div class="tip warm"><b>면세가 바뀌었어요</b>2026년 11월부터 일본 면세는 <strong>리펀드 방식</strong>이에요. 매장에서는 세금 포함 가격으로 사고, 출국할 때 공항 세관 키오스크에서 여권과 산 물건을 보여 주고 환급받아요. <strong>짐을 부치기 전에</strong> 해야 하니 산 물건은 꺼내기 쉽게 싸 두세요.</div>
+  </div>
+  <div class="card picks">
+    <h3><svg><use href="#i-eat"/></svg>먹을거리</h3>
+    <div class="pickgrid">
+      <div class="pick" data-id="d3-kappatei"><div class="name">슈센테이 나다기쿠 갓파테이<small>히메지 · 점심</small></div><button class="star" type="button" aria-pressed="false" aria-label="고르기"><svg><use href="#i-star"/></svg><span class="lbl">고르기</span></button><p>양조장 직영 이자카야. 점심 11:30~14:00에 오뎅 정식 1,000엔부터. 수요일 휴무라 일요일 OK. 역 도보 4분.</p><div class="links"><a href="https://www.gltjp.com/ko/directory/item/14693/" target="_blank" rel="noopener">소개</a></div></div>
+      <div class="pick" data-id="d3-odenkushi"><div class="name">오뎅과 구시카쓰 히메지노오미세<small>역 도보 1분</small></div><button class="star" type="button" aria-pressed="false" aria-label="고르기"><svg><use href="#i-star"/></svg><span class="lbl">고르기</span></button><p>생강 간장에 찍어 먹는 히메지 오뎅과 꼬치튀김. 기차 시간 직전에도 들르기 쉬워요.</p><div class="links"><a href="https://autoreserve.com/en/restaurants/5XzPXubM7cdxpBWnnUrJ" target="_blank" rel="noopener">소개</a></div></div>
+      <div class="pick" data-id="d3-kyochabana"><div class="name">쿄차바나<small>우메다 · 오코노미야키</small></div><button class="star" type="button" aria-pressed="false" aria-label="고르기"><svg><use href="#i-star"/></svg><span class="lbl">고르기</span></button><p>치즈 듬뿍 토마토 오코노미야키가 대표 메뉴.</p><div class="links"><a href="https://autoreserve.com/ko/restaurants/TCXEpq6x8FSUh8CBV96k" target="_blank" rel="noopener">소개</a></div></div>
+      <div class="pick" data-id="d3-botejyu"><div class="name">보테주 우메다<small>정통 오사카식</small></div><button class="star" type="button" aria-pressed="false" aria-label="고르기"><svg><use href="#i-star"/></svg><span class="lbl">고르기</span></button><p>마를 듬뿍 넣어 겉은 얇고 속은 부드러운 전통 오코노미야키.</p><div class="links"><a href="https://www.google.com/maps/search/?api=1&query=ぼてぢゅう+梅田" target="_blank" rel="noopener">지도</a></div></div>
+      <div class="pick" data-id="d3-kenkushi"><div class="name">켄쿠시 나카자키초점<small>구시카쓰</small></div><button class="star" type="button" aria-pressed="false" aria-label="고르기"><svg><use href="#i-star"/></svg><span class="lbl">고르기</span></button><p>나카자키초역 근처 꼬치튀김 이자카야. 월요일 휴무라 일요일 저녁 OK. 1인 5,000~6,000엔대.</p><div class="links"><a href="https://www.google.com/maps/search/?api=1&query=けんくし+中崎町" target="_blank" rel="noopener">지도</a></div></div>
+      <div class="pick" data-id="d3-shokudogai"><div class="name">신우메다 식도가<small>오사카역 고가 아래</small></div><button class="star" type="button" aria-pressed="false" aria-label="고르기"><svg><use href="#i-star"/></svg><span class="lbl">고르기</span></button><p>작은 구시카쓰·오코노미야키·선술집이 모인 먹자 골목. 5명이 흩어졌다 모이기 좋아요.</p><div class="links"><a href="https://www.google.com/maps/search/?api=1&query=新梅田食道街" target="_blank" rel="noopener">지도</a></div></div>
+    </div>
+  </div>
+  <div class="card picks stay">
+    <h3><svg><use href="#i-bed"/></svg>숙소 추천 · 예산 1인 12,000엔</h3>
+    <div class="pickgrid">
+      <div class="pick" data-id="h3-respire"><div class="name">호텔 한큐 레스파이어 오사카<span class="badge">추천</span><small>그랑 프론트 옆</small></div><button class="star" type="button" aria-pressed="false" aria-label="고르기"><svg><use href="#i-star"/></svg><span class="lbl">고르기</span></button><div class="price">더블 1실 약 15,600엔~<small>2인 1실이면 1인 약 8,000엔~ · 조식 별도</small></div><p>4일차 하루카를 타는 우메키타 지하 홈과 가장 가까워요. 요도바시·루쿠아도 걸어서 몇 분이라 쇼핑한 짐을 중간에 두고 오기 좋아요.</p><div class="links"><a href="https://www.google.com/maps/search/?api=1&query=ホテル阪急レスパイア大阪" target="_blank" rel="noopener">지도</a><a href="https://www.jalan.net/yad304150/" target="_blank" rel="noopener">자란</a></div></div>
+      <div class="pick" data-id="h3-viainn"><div class="name">비아 인 우메다<small>오사카역 남쪽 도보 5분</small></div><button class="star" type="button" aria-pressed="false" aria-label="고르기"><svg><use href="#i-star"/></svg><span class="lbl">고르기</span></button><div class="price">비즈니스 호텔 가격대<small>날짜 넣고 확인</small></div><p>JR 계열 비즈니스 호텔. 남성 일행 1인실로 잡기 좋고, 신우메다 식도가와 가까워요.</p><div class="links"><a href="https://www.google.com/maps/search/?api=1&query=ヴィアイン梅田" target="_blank" rel="noopener">지도</a></div></div>
+      <div class="pick" data-id="h3-sunroute"><div class="name">호텔 선루트 우메다<small>오사카역 도보 6분</small></div><button class="star" type="button" aria-pressed="false" aria-label="고르기"><svg><use href="#i-star"/></svg><span class="lbl">고르기</span></button><div class="price">비즈니스 호텔 가격대<small>날짜 넣고 확인</small></div><p>한큐 우메다역 도보 5분. 돈키호테·나카자키초 쪽으로 가기 편해요.</p><div class="links"><a href="https://www.google.com/maps/search/?api=1&query=ホテルサンルート梅田" target="_blank" rel="noopener">지도</a></div></div>
+    </div>
+    <div class="tip warm"><b>알아둘 것</b>오사카는 숙박세가 따로 있어 체크인 때 1인 1박 수백 엔을 현장에서 내요. 1월 주말이라 일찍 잡을수록 싸요.</div>
+  </div>
+</section>
+
+<!-- DAY 4 -->
+<section id="day4" class="d4">
+  <div class="dayband">
+    <div class="date">4일차 · 1.25 월요일</div>
+    <h2>우메다 아침 → <em>하루카</em>로 공항</h2>
+    <div class="wx"><span>오사카 평년 <b>최고 10° · 최저 3°</b></span></div>
+    <ol class="route">
+      <li><span class="stop">오사카역</span></li><li class="mode">하루카 약 50분</li>
+      <li><span class="stop">간사이공항</span></li>
+    </ol>
+  </div>
+  <div class="card">
+    <h3>시간표</h3>
+    <ol class="tl">
+      <li><time>08:00</time><div class="what"><strong>조식 · 산책</strong><span class="meta">1시간 30분 · 1,000엔</span></div></li>
+      <li class="move"><time>09:40</time><div class="what"><strong>하루카 · 오사카역 → 간사이공항</strong><span class="tag pass">패스</span><span class="meta">50분 · 우메키타 지하 홈에서 타요</span></div></li>
+      <li><time>10:30</time><div class="what"><strong>세관 면세 환급 확인 → 짐 부치기</strong><span class="tag check">순서 중요</span><span class="meta">출발층 세관 키오스크에서 여권·산 물건 확인 후 환급, 그다음 수하물 위탁</span></div></li>
+      <li><time>11:15</time><div class="what"><strong>출국 심사 · 공항 점심</strong><span class="meta">~13:00 · 1,500엔</span></div></li>
+    </ol>
+  </div>
+  <div class="card picks">
+    <h3><svg><use href="#i-fun"/></svg>아침에 짧게</h3>
+    <div class="pickgrid">
+      <div class="pick" data-id="d4-grand"><div class="name">그랑 프론트·우메키타 공원<small>오사카역 바로 옆</small></div><button class="star" type="button" aria-pressed="false" aria-label="고르기"><svg><use href="#i-star"/></svg><span class="lbl">고르기</span></button><p>하루카 타는 우메키타 홈 바로 위라 아침 산책 동선이 짧아요.</p><div class="links"><a href="https://www.google.com/maps/search/?api=1&query=うめきた公園" target="_blank" rel="noopener">지도</a></div></div>
+      <div class="pick" data-id="d4-depachika"><div class="name">한큐·다이마루 백화점 지하 식품관<small>10:00 오픈</small></div><button class="star" type="button" aria-pressed="false" aria-label="고르기"><svg><use href="#i-star"/></svg><span class="lbl">고르기</span></button><p>선물용 과자를 사려면 전날 밤에 사두세요. 대부분 10시에 열어서 09:40 하루카와 겹쳐요.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 비용 -->
+<section id="cost">
+  <div class="sechead"><svg><use href="#i-coin"/></svg><h2>비용<span class="sub">항공권 제외 · 환율은 직접 바꿔 볼 수 있어요</span></h2></div>
+  <div class="card">
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>항목</th><th>1인</th><th>5인</th></tr></thead>
+        <tbody id="costBody">
+          <tr data-yen="12000"><td>교통 · 간사이 와이드 패스</td><td>12,000엔</td><td>60,000엔</td></tr>
+          <tr data-yen="32000"><td>숙박 · 구라시키 12,000 + 다카마쓰 8,000 + 오사카 12,000</td><td>32,000엔</td><td>160,000엔</td></tr>
+          <tr data-yen="21900"><td>식비 · 구라시키 저녁과 바 포함</td><td>21,900엔</td><td>109,500엔</td></tr>
+          <tr data-yen="6910"><td>입장료 · 미술관 2,000 + 리쓰린 410 + 히메지성 2,500 + 전망대 2,000</td><td>6,910엔</td><td>34,550엔</td></tr>
+          <tr data-yen="6000"><td>기타 예비비</td><td>6,000엔</td><td>30,000엔</td></tr>
+        </tbody>
+        <tfoot><tr><td>합계</td><td class="num">78,810엔</td><td class="num">394,050엔</td></tr></tfoot>
+      </table>
+    </div>
+    <div class="fx"><label for="fxRate">100엔당</label><input id="fxRate" type="number" inputmode="numeric" min="500" max="1500" step="5" value="850"><span>원</span></div>
+    <div class="bigsum">
+      <div><small>1인</small><strong id="krw1">약 67만 원</strong></div>
+      <div><small>5인</small><strong id="krw5">약 335만 원</strong></div>
+    </div>
+    <p class="muted" style="margin:10px 0 0">남성 일행 1명은 1인실이라 숙박비가 조금 더 나올 수 있어요. 추천 숙소(구라시키 국제호텔·클레멘트 인·한큐 레스파이어)를 2인 1실로 쓰면 숙박 예산 32,000엔 안에 들어올 가능성이 커요. 1일차 저녁을 가시와야 고바야시로 고르면 1인 4,000~6,000엔이 늘어요. 3일차 쇼핑·술 값과 오사카 숙박세는 위 합계에 없어요.</p>
+  </div>
+</section>
+
+<!-- 날씨·옷차림 -->
+<section id="weather">
+  <div class="sechead"><svg><use href="#i-sun"/></svg><h2>날씨와 옷차림<span class="sub">1월 평년값 기준 · 실제 예보는 출발 2주 전부터</span></h2></div>
+  <div class="card">
+    <div class="countdown" id="countdown">출발까지 며칠 남았는지 계산 중</div>
+    <p class="muted" style="margin:4px 0 12px" id="fcNote">오늘(11월) 기준으로는 아직 실제 예보가 나오지 않아요. 아래 숫자는 1991~2020년 평년값이고, 1월 8일쯤부터 아래 링크에서 2주 예보를 확인하세요.</p>
+    <div class="wxgrid">
+      <div class="wxcard"><div class="city">구라시키</div><div class="t num">최고 9° · 최저 0°</div><div class="thermo"><i style="left:20%;right:30%"></i></div><a href="https://www.google.com/search?q=倉敷+天気+2週間" target="_blank" rel="noopener">실시간 예보</a></div>
+      <div class="wxcard"><div class="city">다카마쓰</div><div class="t num">최고 10° · 최저 2°</div><div class="thermo"><i style="left:27%;right:27%"></i></div><a href="https://www.google.com/search?q=高松市+天気+2週間" target="_blank" rel="noopener">실시간 예보</a></div>
+      <div class="wxcard"><div class="city">히메지</div><div class="t num">최고 9° · 최저 0°</div><div class="thermo"><i style="left:20%;right:30%"></i></div><a href="https://www.google.com/search?q=姫路+天気+2週間" target="_blank" rel="noopener">실시간 예보</a></div>
+      <div class="wxcard"><div class="city">오사카</div><div class="t num">최고 10° · 최저 3°</div><div class="thermo"><i style="left:30%;right:27%"></i></div><a href="https://www.google.com/search?q=大阪+天気+2週間" target="_blank" rel="noopener">실시간 예보</a></div>
+    </div>
+    <div class="tip cool"><b>날씨 특징</b>세토 내해 쪽은 겨울에 맑고 건조한 날이 많아요. 낮엔 서울 늦가을 같지만 해가 지면 0°C 가까이 떨어지고, 바닷가(기타하마·빨간 등대)와 전망대는 바람 때문에 체감이 더 추워요. 눈은 드물어요.</div>
+    <p class="muted" style="margin:10px 0 0">기온 출처: 일본 기상청 평년값을 정리한 기후 자료(다카마쓰 1월 최고 9.7°·최저 2.1° 등). 구라시키·히메지는 가까운 관측소 평년값으로 어림한 값이에요.</p>
+  </div>
+  <div class="card">
+    <h3>옷차림 가이드</h3>
+    <dl class="wearlist">
+      <dt>속</dt><dd>발열 내의(히트텍) 상하. 밤 산책이 있는 1·2일차엔 꼭.</dd>
+      <dt>중간</dt><dd>니트나 맨투맨. 실내·기차 안은 따뜻하니 벗기 쉬운 걸로.</dd>
+      <dt>겉</dt><dd>경량 패딩 + 바람 막는 코트, 또는 롱패딩 하나. 낮엔 지퍼를 열고 다닐 정도예요.</dd>
+      <dt>하의</dt><dd>기모 바지나 두꺼운 청바지. 치마라면 두꺼운 타이츠.</dd>
+      <dt>신발</dt><dd>하루 1~2만 보 걷는 일정이라 편한 운동화. 히메지성에서 신발을 벗으니 벗고 신기 쉬운 것.</dd>
+      <dt>소품</dt><dd>목도리, 장갑, 비니. 운하 야경·바닷가 석양·전망대에서 빛을 봐요.</dd>
+    </dl>
+    <div class="tip pink"><b>짐 꾸리기</b>매일 숙소를 옮기니 캐리어는 작게. 기차 지정석 짐칸이 좁아요. 2일차 오카야마, 3일차 히메지에서는 역 코인로커에 맡기면 편해요.</div>
+  </div>
+</section>
+
+<!-- 체크리스트 -->
+<section id="checklist">
+  <div class="sechead"><svg><use href="#i-check"/></svg><h2>체크리스트<span class="sub">누른 내용은 이 기기에만 저장돼요</span></h2></div>
+  <div class="card mypicks">
+    <h3>고른 곳 모아보기</h3>
+    <p class="muted" id="pickEmpty" style="margin:0">아직 고른 곳이 없어요. 위 카드에서 별을 눌러 보세요.</p>
+    <ul id="pickList"></ul>
+  </div>
+  <div class="card">
+    <div class="progress"><div class="bar"><i id="progBar"></i></div><span class="num muted" id="progTxt">0 / 0</span></div>
+    <div class="group"><h3>예약</h3>
+      <label class="check"><input type="checkbox" id="c-pass"><span>간사이 와이드 패스 + 전 구간 지정석 예약<small>JR서일본 공식 사이트에서 미리 예약 → 공항 발권기에서 QR로 발권 · 1인 12,000엔</small></span></label>
+      <label class="check"><input type="checkbox" id="c-hotel"><span>숙소 3곳 예약<small>날짜별 '숙소 추천'에서 고르기. 남성 일행 1명은 1인실(비즈니스 호텔이 구하기 쉬움)</small></span></label>
+      <label class="check"><input type="checkbox" id="c-dinner1"><span>1일차 구라시키 저녁 5인 예약<small>20:00로 잡기 (야경 산책을 먼저 해요)</small></span></label>
+      <label class="check"><input type="checkbox" id="c-bar"><span>2차 바 자리 확인<small>작은 바가 많아 5명이면 전화로 미리</small></span></label>
+    </div>
+    <div class="group"><h3>출발 전 확인</h3>
+      <label class="check"><input type="checkbox" id="c-udon"><span>다카마쓰 우동집 일요일 영업 확인<small>메리켄야 역전점·사카에다 미나미신마치점은 무휴로 소개됨 · 아지쇼는 일요일 휴무</small></span></label>
+      <label class="check"><input type="checkbox" id="c-ohara"><span>오하라 미술관 겨울 관람 시간 확인</span></label>
+      <label class="check"><input type="checkbox" id="c-ritsurin"><span>리쓰린 공원 입장료 확인<small>410엔 또는 500엔</small></span></label>
+      <label class="check"><input type="checkbox" id="c-light"><span>구라시키 키라메키노미치 올겨울 개최 확인</span></label>
+      <label class="check"><input type="checkbox" id="c-forecast"><span>1/8쯤부터 2주 예보 확인하고 옷 정하기</span></label>
+    </div>
+    <div class="group"><h3>서류와 돈</h3>
+      <label class="check"><input type="checkbox" id="c-passport"><span>여권 (유효기간 넉넉한지)</span></label>
+      <label class="check"><input type="checkbox" id="c-vjw"><span>Visit Japan Web 입국 정보 등록<small>입국심사·세관 QR을 미리 만들어 캡처</small></span></label>
+      <label class="check"><input type="checkbox" id="c-money"><span>엔화 현금 조금 + 트래블 카드<small>우동집·작은 가게는 현금만 받는 곳이 있어요</small></span></label>
+      <label class="check"><input type="checkbox" id="c-ins"><span>여행자 보험</span></label>
+      <label class="check"><input type="checkbox" id="c-sim"><span>eSIM 또는 로밍</span></label>
+      <label class="check"><input type="checkbox" id="c-liquor"><span>주류 면세 한도 확인<small>한국 입국 시 총 2L · 400달러 이하. 병 수 제한은 관세청 공지로 확인</small></span></label>
+      <label class="check"><input type="checkbox" id="c-refund"><span>일본 면세 환급 순서 기억하기<small>공항 세관 키오스크 환급 → 그다음 짐 부치기 · 영수증 보관</small></span></label>
+      <label class="check"><input type="checkbox" id="c-ic"><span>교통카드(ICOCA 또는 모바일 Suica)<small>나카자키초 지하철·버스 등 패스 밖 이동용</small></span></label>
+    </div>
+    <div class="group"><h3>짐</h3>
+      <label class="check"><input type="checkbox" id="c-heat"><span>발열 내의 · 니트 · 경량 패딩</span></label>
+      <label class="check"><input type="checkbox" id="c-acc"><span>목도리 · 장갑 · 비니</span></label>
+      <label class="check"><input type="checkbox" id="c-socks"><span>두툼한 양말 (히메지성은 신발 벗고 올라감)</span></label>
+      <label class="check"><input type="checkbox" id="c-kairo"><span>핫팩 (현지 편의점에서 '카이로'로 사도 됨)</span></label>
+      <label class="check"><input type="checkbox" id="c-plug"><span>돼지코 어댑터 (일본 A타입 · 100V)</span></label>
+      <label class="check"><input type="checkbox" id="c-batt"><span>보조배터리 (기내 반입만)</span></label>
+      <label class="check"><input type="checkbox" id="c-skin"><span>립밤 · 핸드크림 (건조해요)</span></label>
+      <label class="check"><input type="checkbox" id="c-umb"><span>접이식 우산</span></label>
+      <label class="check"><input type="checkbox" id="c-bag"><span>작은 보조가방 (코인로커 맡길 때 갈아들 용)</span></label>
+      <label class="check"><input type="checkbox" id="c-wrap"><span>술병 포장용 뽁뽁이 · 큰 지퍼백<small>캐리어 빈 공간도 남겨 가기</small></span></label>
+      <label class="check"><input type="checkbox" id="c-ecobag"><span>접이식 쇼핑백</span></label>
+    </div>
+    <button class="reset" type="button" id="resetBtn">체크 모두 지우기</button>
+  </div>
+</section>
+
+<footer>
+  <p>일정·비용은 받은 최종안 기준이고, 1일차 저녁 순서만 겨울 조명 시간에 맞춰 바꿨어요. 영업시간과 요금은 2026년 11월 검색 기준이라 바뀔 수 있어요. 100엔당 850원 기준.</p>
+</footer>
+</div>
+
+<script>
+(function(){
+  var S = {get:function(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}},set:function(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+
+  /* 고르기 */
+  var picks = S.get('setouchi-picks') || {};
+  var pickEls = document.querySelectorAll('.pick[data-id]');
+  function renderPicks(){
+    var list = document.getElementById('pickList'); list.innerHTML = ''; var n = 0;
+    pickEls.forEach(function(el){
+      var on = !!picks[el.dataset.id]; el.classList.toggle('on', on);
+      var b = el.querySelector('.star'); if(!b) return;
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      b.querySelector('.lbl').textContent = on ? '골랐어요' : '고르기';
+      if(on){
+        n++; var sec = el.closest('section'); var day = sec.querySelector('.date');
+        var li = document.createElement('li');
+        li.textContent = (day ? day.textContent.split('·')[0].trim() + ' · ' : '') + el.querySelector('.name').firstChild.textContent.trim();
+        list.appendChild(li);
+      }
+    });
+    document.getElementById('pickEmpty').hidden = n > 0;
+  }
+  pickEls.forEach(function(el){
+    var b = el.querySelector('.star'); if(!b) return;
+    b.addEventListener('click', function(){ var id = el.dataset.id; if(picks[id]) delete picks[id]; else picks[id] = 1; S.set('setouchi-picks', picks); renderPicks(); });
+  });
+  renderPicks();
+
+  /* 체크리스트 */
+  var checks = S.get('setouchi-checks') || {};
+  var boxes = document.querySelectorAll('#checklist input[type=checkbox]');
+  function prog(){ var d = 0; boxes.forEach(function(b){ if(b.checked) d++; });
+    document.getElementById('progTxt').textContent = d + ' / ' + boxes.length;
+    document.getElementById('progBar').style.width = (boxes.length ? d / boxes.length * 100 : 0) + '%'; }
+  boxes.forEach(function(b){ b.checked = !!checks[b.id];
+    b.addEventListener('change', function(){ checks[b.id] = b.checked; S.set('setouchi-checks', checks); prog(); }); });
+  document.getElementById('resetBtn').addEventListener('click', function(){ checks = {}; S.set('setouchi-checks', checks); boxes.forEach(function(b){ b.checked = false; }); prog(); });
+  prog();
+
+  /* 환율 */
+  var fx = document.getElementById('fxRate');
+  var saved = S.get('setouchi-fx'); if(saved) fx.value = saved;
+  function man(won){ return '약 ' + Math.round(won / 10000).toLocaleString('ko-KR') + '만 원'; }
+  function calc(){ var r = parseFloat(fx.value); if(!(r > 0)) return; var yen = 78810;
+    document.getElementById('krw1').textContent = man(yen * r / 100);
+    document.getElementById('krw5').textContent = man(yen * 5 * r / 100); S.set('setouchi-fx', fx.value); }
+  fx.addEventListener('input', calc); calc();
+
+  /* 출발까지 */
+  var start = new Date(2027, 0, 22), now = new Date(); now.setHours(0,0,0,0);
+  var dd = Math.round((start - now) / 864e5), cd = document.getElementById('countdown'), note = document.getElementById('fcNote');
+  if(dd > 0){ cd.textContent = '출발까지 D-' + dd;
+    if(dd <= 14) note.textContent = '이제 2주 예보 범위에 들어왔어요. 아래 도시별 링크에서 실제 예보를 확인하세요. 숫자는 평년값이에요.';
+    else note.textContent = '아직 실제 예보가 나오지 않는 시점이에요. 아래 숫자는 1991~2020년 평년값이고, 1월 8일쯤(D-14)부터 도시별 링크에서 2주 예보를 확인하세요.'; }
+  else if(dd > -4){ cd.textContent = '여행 중! 오늘은 ' + (1 - dd) + '일차'; note.textContent = '아래 링크로 오늘 예보를 확인하세요.'; }
+  else { cd.textContent = '다녀온 여행이에요'; }
+})();
+</script>
+</body>
+</html>
